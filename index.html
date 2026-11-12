@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quick Links Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+:root{
+    --bg1:#eef2ff;
+    --bg2:#e0f2fe;
+    --bg3:#f0fdf4;
+    --card:#ffffff;
+    --ink:#0f172a;
+    --muted:#64748b;
+    --line:#e2e8f0;
+    --brand:#2563eb;
+}
+
+*{box-sizing:border-box}
+
+body{
+    font-family:"Segoe UI", system-ui, Arial, sans-serif;
+    margin:0;
+    padding:28px 20px 48px;
+    min-height:100vh;
+    color:var(--ink);
+    background:
+        radial-gradient(1200px 500px at 10% -10%, rgba(37,99,235,.12), transparent 60%),
+        radial-gradient(1000px 500px at 110% 0%, rgba(34,197,94,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2) 55%, var(--bg3));
+    background-attachment:fixed;
+}
+
+/* ================= PROFILE HEADER ================= */
+.profile-header{
+    max-width:1300px;
+    margin:0 auto 24px;
+    padding:22px 26px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
+    backdrop-filter:blur(12px);
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,.7);
+    box-shadow:0 20px 45px rgba(15,23,42,.10);
+}
+
+.profile-header::after{
+   content:"";
+    position:absolute;
+    top:-60px;
+    right:-60px;
+    width:150px;
+    height:150px;
+    background:url("https://urjaconnect.guvnl.in/images/footerframe.png")
+               no-repeat center/contain;
+    opacity:1;
+    pointer-events:none;
+}
+
+.profile-avatar{
+    width:74px;
+    height:74px;
+    flex:0 0 auto;
+    border-radius:20px;
+    background:linear-gradient(135deg,#2563eb,#22c55e);
+    color:#fff;
+    font-size:27px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 10px 24px rgba(37,99,235,.45);
+    position:relative;
+    z-index:1;
+}
+
+.profile-text{position:relative;z-index:1}
+
+.profile-name{
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:.2px;
+    background:linear-gradient(90deg,#2563eb,#22c55e,#7c3aed);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.profile-designation{
+    font-size:14px;
+    color:#334155;
+    margin-top:5px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+.profile-designation i{color:var(--brand)}
+
+/* ================= QUICK LINKS ================= */
+.quick-links-box{
+    max-width:1300px;
+    margin:auto;
+    padding:26px;
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.8);
+    border-radius:22px;
+    box-shadow:0 20px 45px rgba(15,23,42,.08);
+}
+
+/* Second shelf: Ashok Mandanka's Work */
+.work-box{
+    margin-top:24px;
+    border-top:4px solid transparent;
+    background:
+        linear-gradient(rgba(255,255,255,.78), rgba(255,255,255,.78)) padding-box,
+        linear-gradient(90deg,#2563eb,#22c55e,#7c3aed) border-box;
+    border:2px solid transparent;
+}
+.work-box .quick-links-title i{color:#7c3aed}
+.work-box .quick-links-title .tag{
+    font-size:11px;
+    font-weight:700;
+    color:#fff;
+    background:linear-gradient(90deg,#2563eb,#7c3aed);
+    padding:3px 10px;
+    border-radius:999px;
+    letter-spacing:.3px;
+}
+
+.quick-links-title{
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    color:#1e293b;
+    flex-wrap:wrap;
+}
+.quick-links-title i{color:var(--brand)}
+
+.links-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+    gap:18px;
+}
+
+/* ================= LINK CARD ================= */
+.link-card{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:26px 12px;
+    text-decoration:none;
+    color:var(--ink);
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    isolation:isolate;
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+/* Top accent bar (uses the icon color via currentColor of .icon-box) */
+.link-card::before{
+    content:"";
+    position:absolute;
+    inset:0 0 auto 0;
+    height:4px;
+    background:var(--accent, var(--brand));
+    opacity:.9;
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .25s ease;
+}
+
+/* Watermark image */
+.link-card::after{
+    content:"";
+    position:absolute;
+    top:-45px;
+    right:-45px;
+    width:100px;
+    height:100px;
+    background:url("https://urjaconnect.guvnl.in/images/footerframe.png")
+               no-repeat center/contain;
+    opacity:0.5;
+    z-index:-1;
+    transition:opacity .25s ease, transform .25s ease;
+}
+
+.link-card:hover{
+    transform:translateY(-7px);
+    box-shadow:0 18px 34px rgba(37,99,235,.20);
+    border-color:transparent;
+}
+.link-card:hover::before{transform:scaleX(1)}
+.link-card:hover::after{opacity:.35;transform:scale(1.1)}
+
+.icon-box{
+    width:58px;
+    height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    border-radius:16px;
+    margin-bottom:14px;
+    background:color-mix(in srgb, var(--accent) 12%, #fff);
+    color:var(--accent);
+    transition:transform .25s ease;
+}
+.link-card:hover .icon-box{transform:scale(1.08) rotate(-4deg)}
+
+.title{
+    font-size:14px;
+    font-weight:700;
+    line-height:1.3;
+}
+
+.subtitle{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+/* Accent colors -> single variable drives icon, bar & glow */
+.c-yellow{--accent:#f59e0b}
+.c-green {--accent:#10b981}
+.c-blue  {--accent:#3b82f6}
+.c-pink  {--accent:#ec4899}
+.c-purple{--accent:#8b5cf6}
+.c-violet{--accent:#7c3aed}
+.c-orange{--accent:#f97316}
+.c-red   {--accent:#ef4444}
+.c-teal  {--accent:#14b8a6}
+.c-slate {--accent:#475569}
+.c-black {--accent:#1e293b}
+
+/* ================= MOBILE ================= */
+@media(max-width:768px){
+    .profile-header{flex-direction:column;text-align:center}
+    .profile-designation{justify-content:center}
+    .links-grid{grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:14px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PROFILE HEADER -->
+<div class="profile-header">
+    <div class="profile-avatar">AH</div>
+    <div class="profile-text">
+        <div class="profile-name">A H Mandanka</div>
+        <div class="profile-designation">
+            <i class="fas fa-bolt"></i> JE, Circle Office, Baroda O&amp;M
+        </div>
+    </div>
+</div>
+
+<!-- QUICK LINKS -->
+<div class="quick-links-box">
+<div class="quick-links-title">
+    <i class="fas fa-external-link-alt"></i> Quick Links
+</div>
+
+<div class="links-grid">
+
+<a href="http://otpauthmg.guvnl.in:8240/register/login.php" class="link-card">
+    <div class="icon-box c-red"><i class="fas fa-id-card"></i></div>
+    <div class="title">E-Urja</div>
+</a>
+
+<a href="http://mgbill.eurja.co.in:8010/ltbill/" class="link-card">
+    <div class="icon-box c-green"><i class="fas fa-clipboard"></i></div>
+    <div class="title">LT Billing</div>
+</a>
+
+<a href="https://mail.guvnl.com/static/login/" target="_blank" class="link-card">
+    <div class="icon-box c-blue"><i class="fas fa-envelope"></i></div>
+    <div class="title">E-Mail</div>
+    <div class="subtitle">Service</div>
+</a>
+
+<a href="https://helpdesk.guvnl.in/" class="link-card">
+    <div class="icon-box c-purple"><i class="fas fa-headset"></i></div>
+    <div class="title">HelpDesk</div>
+</a>
+
+<a href="https://discom.geourja.com/auth/login" class="link-card">
+    <div class="icon-box c-teal"><i class="fas fa-location-dot"></i></div>
+    <div class="title">GEO URJA</div>
+</a>
+
+<a href="https://esarkar.gujarat.gov.in/login.jsp" class="link-card">
+    <div class="icon-box c-red"><i class="fas fa-university"></i></div>
+    <div class="title">e-Sarkar</div>
+</a>
+
+<a href="https://mdm.mgvclinfra.in/ouaf/loginPage.jsp" class="link-card">
+    <div class="icon-box c-blue"><i class="fas fa-mobile-alt"></i></div>
+    <div class="title">MDM</div>
+    <div class="subtitle">Smart Meter MDM</div>
+</a>
+
+<a href="https://srtgeda.gujarat.gov.in/" class="link-card">
+    <div class="icon-box c-green"><i class="fas fa-solar-panel"></i></div>
+    <div class="title">GEDA Portal</div>
+</a>
+
+<a href="https://pmsuryaghar.gov.in/#/" class="link-card">
+    <div class="icon-box c-yellow"><i class="fas fa-sun"></i></div>
+    <div class="title">PM Suryaghar</div>
+</a>
+
+<a href="https://sky.guvnl.in/login.html" class="link-card">
+    <div class="icon-box c-pink"><i class="fas fa-bolt"></i></div>
+    <div class="title">SKY Portal</div>
+</a>
+
+<a href="http://10.0.0.72/new/pages/home.php" class="link-card">
+    <div class="icon-box c-violet"><i class="fas fa-server"></i></div>
+    <div class="title">MGVCL Intranet</div>
+</a>
+
+<a href="http://10.0.0.72/dar_login.php" class="link-card">
+    <div class="icon-box c-orange"><i class="fas fa-book-open"></i></div>
+    <div class="title">DAR Portal</div>
+</a>
+
+<a href="https://portal.guvnl.in/login.php?err=202" class="link-card">
+    <div class="icon-box c-blue"><i class="fas fa-lightbulb"></i></div>
+    <div class="title">E-Vidhyut Seva</div>
+</a>
+
+<a href="https://portal.guvnl.in/admin/site/login.php" class="link-card">
+    <div class="icon-box c-green"><i class="fas fa-briefcase"></i></div>
+    <div class="title">Admin Portal</div>
+</a>
+
+<a href="https://lookerstudio.google.com/u/0/reporting/879d36c5-d365-4efc-982d-03ba60216255/page/p_6pcmhyviyd" class="link-card">
+    <div class="icon-box c-purple"><i class="fas fa-chart-line"></i></div>
+    <div class="title">SM Pendancy Dashboard</div>
+</a>
+
+<a href="https://docs.google.com/spreadsheets/u/0/" class="link-card">
+    <div class="icon-box c-green"><i class="fas fa-table"></i></div>
+    <div class="title">Google Sheet</div>
+</a>
+
+<a href="https://mgvcl.co.in:8085/SMTDS/Login.php" class="link-card">
+    <div class="icon-box c-slate"><i class="fas fa-network-wired"></i></div>
+    <div class="title">Urja Vitaran Portal</div>
+</a>
+
+<a href="https://analytics.mgvclinfra.in/analytics" class="link-card">
+    <div class="icon-box c-black"><i class="fas fa-toolbox"></i></div>
+    <div class="title">Smart Meter OUA Tool</div>
+</a>
+
+</div>
+</div>
+
+<!-- ASHOK MANDANKA'S WORK -->
+<div class="quick-links-box work-box">
+<div class="quick-links-title">
+    <i class="fas fa-laptop-code"></i> Ashok Mandanka's Work
+    <span class="tag">Tools by AHM</span>
+</div>
+
+<div class="links-grid">
+
+<a href="https://mandanka17315.github.io/BOM-Smart-Meter-Report/" target="_blank" class="link-card">
+    <div class="icon-box c-blue"><i class="fas fa-gauge-high"></i></div>
+    <div class="title">Smart Meter Report</div>
+    <div class="subtitle">Baroda O&amp;M Circle</div>
+</a>
+
+<a href="https://mandanka17315.github.io/MGVCL-Proposal-Tool/" target="_blank" class="link-card">
+    <div class="icon-box c-orange"><i class="fas fa-file-signature"></i></div>
+    <div class="title">MGVCL Proposal Tool</div>
+    <div class="subtitle">Proposal &amp; SWO</div>
+</a>
+
+<a href="https://mandanka17315.github.io/T-D-Loss-Analysis/" target="_blank" class="link-card">
+    <div class="icon-box c-violet"><i class="fas fa-chart-pie"></i></div>
+    <div class="title">T&amp;D Loss Analysis</div>
+    <div class="subtitle">Division &amp; Circle</div>
+</a>
+
+<a href="https://mandanka17315.github.io/Sub-Division-T-D-Loss-BOMC/" target="_blank" class="link-card">
+    <div class="icon-box c-teal"><i class="fas fa-chart-column"></i></div>
+    <div class="title">Sub-Division T&amp;D Loss</div>
+    <div class="subtitle">BOMC</div>
+</a>
+
+<a href="https://mandanka17315.github.io/GEDA-Release-Order-BOMC/" target="_blank" class="link-card">
+    <div class="icon-box c-green"><i class="fas fa-file-circle-check"></i></div>
+    <div class="title">GEDA Release Order</div>
+    <div class="subtitle">BOMC</div>
+</a>
+
+</div>
+</div>
+
+</body>
+</html>
